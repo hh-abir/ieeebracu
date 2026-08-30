@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 type Quote = {
   text: string;
   author: string;
@@ -157,66 +161,84 @@ const quotes: Quote[] = [
   },
 ];
 
-// Deterministic daily pick based on the date (changes at midnight)
-function getDailyQuote(): Quote {
+// Deterministic daily index based on current date
+function getDailyQuoteIndex(): number {
   const now = new Date();
   const dayOfYear = Math.floor(
     (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / 86400000
   );
-  return quotes[dayOfYear % quotes.length];
+  return dayOfYear % quotes.length;
 }
 
 export default function DailyQuote() {
-  const q = getDailyQuote();
+  const [index, setIndex] = useState(getDailyQuoteIndex);
+  const [isFading, setIsFading] = useState(false);
+
+  const current = quotes[index];
+
+  const handleNext = () => {
+    setIsFading(true);
+    setTimeout(() => {
+      setIndex((prev) => (prev + 1) % quotes.length);
+      setIsFading(false);
+    }, 140);
+  };
 
   return (
-    <section className="relative overflow-hidden bg-[#0A2540] py-28 font-[family-name:var(--font-sans)]">
-      {/* decorative elements */}
-      <div className="absolute left-0 top-0 h-full w-full opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 20% 50%, #3E9BD6 0%, transparent 50%), radial-gradient(circle at 80% 50%, #00629B 0%, transparent 50%)",
-        }}
-      />
-      <div className="absolute -left-20 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full border border-white/[0.06]" />
-      <div className="absolute -left-10 top-1/2 h-60 w-60 -translate-y-1/2 rounded-full border border-white/[0.04]" />
-      <div className="absolute -right-20 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full border border-white/[0.06]" />
-      <div className="absolute -right-10 top-1/2 h-60 w-60 -translate-y-1/2 rounded-full border border-white/[0.04]" />
-
-      <div className="relative mx-auto max-w-[900px] px-8 text-center">
-        {/* opening quote mark */}
-        <div className="mb-8 font-[family-name:var(--font-serif)] text-[80px] font-bold leading-none text-[#00629B]/40">
-          &ldquo;
+    <section className="border-y border-[#E3DFD5] bg-white pt-8 pb-11 font-[family-name:var(--font-sans)] sm:pt-9 sm:pb-12">
+      <div className="mx-auto max-w-[820px] px-6 text-center">
+        {/* Subtle decorative quotation mark icon */}
+        <div className="mb-3 text-[#00629B]/35">
+          <svg className="mx-auto h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z" />
+          </svg>
         </div>
 
-        <blockquote className="m-0">
-          <p className="m-0 font-[family-name:var(--font-serif)] text-[clamp(22px,3vw,34px)] font-medium leading-[1.4] tracking-[-0.01em] text-white/90">
-            {q.text}
+        {/* Quote body */}
+        <blockquote
+          className={`m-0 transition-opacity duration-150 ${
+            isFading ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          <p className="m-0 font-[family-name:var(--font-serif)] text-[clamp(18px,2.2vw,24px)] font-medium leading-[1.4] tracking-[-0.01em] text-[#191B1E]">
+            &ldquo;{current.text}&rdquo;
           </p>
         </blockquote>
 
-        {/* divider */}
-        <div className="mx-auto my-8 h-px w-16 bg-[#00629B]/60" />
-
-        {/* attribution */}
-        <div>
-          <div className="text-[16px] font-semibold tracking-[-0.01em] text-white">
-            {q.author}
+        {/* Attribution & refresh control */}
+        <div
+          className={`mt-4 flex items-center justify-center gap-3 transition-opacity duration-150 ${
+            isFading ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          <div className="text-[13.5px]">
+            <span className="font-semibold text-[#191B1E]">{current.author}</span>
+            <span className="mx-2 text-[#C0C4C9]">·</span>
+            <span className="text-[13px] text-[#6E7178]">{current.title}</span>
           </div>
-          <div className="mt-1 text-[13px] font-medium uppercase tracking-[0.1em] text-white/40">
-            {q.title}
-          </div>
-        </div>
 
-        {/* daily badge */}
-        <div className="mt-10 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 backdrop-blur">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#3E9BD6]">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M12 6v6l4 2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/50">
-            Quote of the day
-          </span>
+          <button
+            onClick={handleNext}
+            className="group flex h-6 w-6 items-center justify-center rounded-full border border-[#E3DFD5] bg-[#FBFAF7] text-[#9A9E9F] transition-all hover:border-[#00629B]/30 hover:bg-[#EAF1F6] hover:text-[#00629B] active:scale-90"
+            title="Next quote"
+            aria-label="Next quote"
+          >
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              className="transition-transform duration-300 group-hover:rotate-180"
+            >
+              <path
+                d="M21.5 2v6h-6M21.34 15.57a10 10 0 11-.57-8.38l5.67-5.67"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </section>

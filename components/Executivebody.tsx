@@ -58,7 +58,7 @@ const chapters: Chapter[] = [
   },
   {
     abbr: "AESS", name: "Aerospace & Electronic Systems",
-    desc: "Satellites, avionics, and flight systems",
+    desc: "Satellites, radar systems, and space technology",
     members: [
       { name: "Nusrat Jahan", role: "Chair", image: "https://ieeebracu.com/wp-content/uploads/2026/02/20251214_124459-NUSRAT-JAHAN-modified-2.png" },
       { name: "Mashiat Lamisa Riddhi", role: "Vice Chair", image: "https://ieeebracu.com/wp-content/uploads/2026/02/Riddhi-_-Vice-Chair-_-AESS-MASHIAT-LAMISA-RIDDHI-modified.png" },
@@ -68,7 +68,7 @@ const chapters: Chapter[] = [
   },
   {
     abbr: "ComSoc", name: "Communications Society",
-    desc: "Networks, signals, and connectivity",
+    desc: "Networks, 5G, and information theory",
     members: [
       { name: "Mehzabin Mahmud", role: "Chair", image: "https://ieeebracu.com/wp-content/uploads/2026/02/Mehzabin-Mahmud-MEHZABIN-MAHMUD-modified.png" },
       { name: "Ramisha Islam Rodela", role: "Vice Chair", image: "https://ieeebracu.com/wp-content/uploads/2026/02/Ramisha-Islam-Rodela_p-RAMISHA-ISLAM-RODELA-modified.png" },
@@ -91,14 +91,16 @@ const chapters: Chapter[] = [
 function PersonCard({ member }: { member: Member }) {
   return (
     <div className="group flex flex-col items-center text-center">
-      <div className="relative mb-4 h-[200px] w-[180px] overflow-hidden rounded-xl border border-[#E3DFD5] bg-white shadow-sm transition-shadow duration-300 group-hover:shadow-[0_8px_24px_rgba(20,22,24,0.10)]">
-        <Image
-          src={member.image}
-          alt={member.name}
-          fill
-          sizes="180px"
-          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
-        />
+      <div className="relative mb-4 flex h-36 w-36 items-center justify-center rounded-full border-2 border-[#E3DFD5] bg-white p-1 shadow-[0_4px_16px_rgba(20,22,24,0.06)] transition-all duration-300 group-hover:border-[#00629B] group-hover:shadow-[0_10px_28px_rgba(0,98,155,0.15)] sm:h-44 sm:w-44">
+        <div className="relative h-full w-full overflow-hidden rounded-full bg-[#F5F3EE]">
+          <Image
+            src={member.image}
+            alt={member.name}
+            fill
+            sizes="(max-width: 640px) 144px, 176px"
+            className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
       </div>
       <h3 className="m-0 text-[15px] font-semibold tracking-[-0.01em] text-[#191B1E]">
         {member.name}
@@ -171,7 +173,7 @@ export default function ExecutiveBody() {
                   </span>
                   <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#E3DFD5] bg-[#F5F3EE] text-[#B9BDC0] transition-all duration-300 group-hover:border-[#00629B]/30 group-hover:bg-[#00629B] group-hover:text-white">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M7 17L17 7M17 7H7M17 7V17" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M7 17L17 7H7M17 7V17" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </span>
                 </div>
@@ -195,7 +197,7 @@ export default function ExecutiveBody() {
                         alt={m.name}
                         fill
                         sizes="36px"
-                        className="object-cover object-top"
+                        className="object-cover object-center"
                       />
                     </div>
                   ))}
@@ -220,7 +222,7 @@ export default function ExecutiveBody() {
             onClick={(e) => e.stopPropagation()}
           >
             {/* modal header */}
-            <div className="relative overflow-hidden border-b border-[#E3DFD5] bg-[#F5F3EE] px-10 py-8">
+            <div className="relative overflow-hidden border-b border-[#E3DFD5] bg-[#F5F3EE] px-8 py-7 sm:px-10 sm:py-8">
               {/* decorative circles */}
               <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[#00629B]/[0.05]" />
               <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-[#00629B]/[0.05]" />
@@ -230,7 +232,7 @@ export default function ExecutiveBody() {
                   <span className="mb-3 inline-block rounded-lg bg-gradient-to-br from-[#00629B] to-[#0A2540] px-3.5 py-1.5 font-[family-name:var(--font-serif)] text-[16px] font-bold tracking-[0.04em] text-white shadow-sm">
                     {activeChapter.abbr}
                   </span>
-                  <h3 className="m-0 mt-2 font-[family-name:var(--font-serif)] text-[26px] font-semibold tracking-[-0.01em] text-[#191B1E]">
+                  <h3 className="m-0 mt-2 font-[family-name:var(--font-serif)] text-[24px] font-semibold tracking-[-0.01em] text-[#191B1E] sm:text-[26px]">
                     {activeChapter.name}
                   </h3>
                   <p className="m-0 mt-1 text-[14px] text-[#6E7178]">
@@ -250,19 +252,21 @@ export default function ExecutiveBody() {
             </div>
 
             {/* modal body — member grid */}
-            <div className="grid grid-cols-2 justify-items-center gap-x-10 gap-y-12 px-10 py-12 sm:grid-cols-4">
+            <div className="grid grid-cols-2 justify-items-center gap-x-8 gap-y-10 px-8 py-10 sm:grid-cols-4 sm:px-10 sm:py-12">
               {activeChapter.members.map((m) => (
                 <div key={m.name} className="group flex flex-col items-center text-center">
-                  <div className="relative mb-4 h-[200px] w-[170px] overflow-hidden rounded-xl border border-[#E3DFD5] bg-[#F5F3EE] shadow-sm transition-shadow duration-300 group-hover:shadow-[0_8px_24px_rgba(20,22,24,0.10)]">
-                    <Image
-                      src={m.image}
-                      alt={m.name}
-                      fill
-                      sizes="170px"
-                      className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
-                    />
+                  <div className="relative mb-3.5 flex h-32 w-32 items-center justify-center rounded-full border-2 border-[#E3DFD5] bg-white p-1 shadow-sm transition-all duration-300 group-hover:border-[#00629B] group-hover:shadow-[0_8px_24px_rgba(0,98,155,0.14)] sm:h-40 sm:w-40">
+                    <div className="relative h-full w-full overflow-hidden rounded-full bg-[#F5F3EE]">
+                      <Image
+                        src={m.image}
+                        alt={m.name}
+                        fill
+                        sizes="(max-width: 640px) 128px, 160px"
+                        className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
                   </div>
-                  <h4 className="m-0 text-[16px] font-semibold text-[#191B1E]">
+                  <h4 className="m-0 text-[15px] font-semibold text-[#191B1E]">
                     {m.name}
                   </h4>
                   <span className="mt-1 text-[12px] font-medium uppercase tracking-[0.08em] text-[#00629B]">

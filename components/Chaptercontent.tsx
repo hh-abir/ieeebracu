@@ -106,13 +106,21 @@ export default function ChapterContent({ ch }: { ch: ChapterData }) {
               <div className="mb-6 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#00629B]">
                 <span className="inline-block h-0.5 w-[26px] bg-[#00629B]" />Current Executive Body · 2026
               </div>
-              <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
+              <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
                 {ch.eb.map((m) => (
                   <div key={m.name} className="group flex flex-col items-center text-center">
-                    <div className="relative mb-3 h-[150px] w-[130px] overflow-hidden rounded-xl border border-[#E3DFD5] bg-white shadow-sm transition-shadow duration-300 group-hover:shadow-[0_8px_24px_rgba(20,22,24,0.10)]">
-                      <Image src={m.image} alt={m.name} fill sizes="130px" className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]" />
+                    <div className="relative mb-3 flex h-32 w-32 items-center justify-center rounded-full border-2 border-[#E3DFD5] bg-white p-1 shadow-sm transition-all duration-300 group-hover:border-[#00629B] group-hover:shadow-[0_8px_24px_rgba(0,98,155,0.14)] sm:h-36 sm:w-36">
+                      <div className="relative h-full w-full overflow-hidden rounded-full bg-[#F5F3EE]">
+                        <Image
+                          src={m.image}
+                          alt={m.name}
+                          fill
+                          sizes="(max-width: 640px) 128px, 144px"
+                          className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                        />
+                      </div>
                     </div>
-                    <h4 className="m-0 text-[13.5px] font-semibold text-[#191B1E]">{m.name}</h4>
+                    <h4 className="m-0 text-[14px] font-semibold text-[#191B1E]">{m.name}</h4>
                     <span className="mt-0.5 text-[11px] font-medium uppercase tracking-[0.08em] text-[#00629B]">{m.role}</span>
                   </div>
                 ))}

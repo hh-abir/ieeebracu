@@ -37,9 +37,9 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
       </div>
 
       {/* sub-nav */}
-      <div className="sticky top-[68px] z-30 border-b border-[#E3DFD5] bg-[#F5F3EE]/95 backdrop-blur-md">
+      <div className="border-b border-[#E3DFD5] bg-[#F5F3EE]">
         <div className="mx-auto max-w-[1320px] px-8">
-          <nav className="-mb-px flex gap-1 overflow-x-auto py-1">
+          <nav className="-mb-px flex gap-1 overflow-x-auto py-2">
             {subPages.map((p) => {
               const active = pathname === p.href;
               return (
