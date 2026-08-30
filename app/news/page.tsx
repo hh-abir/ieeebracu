@@ -147,7 +147,7 @@ export default function NewsPage() {
       </div>
 
       {/* filters bar */}
-      <div className="sticky top-[68px] z-30 border-b border-[#E3DFD5] bg-[#F5F3EE]/95 backdrop-blur-md">
+      <div className="border-b border-[#E3DFD5] bg-[#F5F3EE]">
         <div className="mx-auto flex max-w-[1320px] flex-col gap-4 px-8 py-4 md:flex-row md:items-center md:justify-between">
           {/* tag pills */}
           <div className="flex flex-wrap gap-2">
