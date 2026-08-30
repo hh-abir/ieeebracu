@@ -519,20 +519,20 @@ function MembersContent() {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 justify-items-center gap-x-8 gap-y-12 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
+              <div className="grid grid-cols-2 justify-items-center gap-x-4 gap-y-8 sm:grid-cols-4 sm:gap-x-6 sm:gap-y-10">
                 {filteredEB.map((m) => (
                   <div
                     key={m.name + m.body + m.year}
                     className="group flex flex-col items-center rounded-2xl border border-[#E3DFD5] bg-white p-6 text-center shadow-sm transition-all duration-300 hover:border-[#00629B]/25 hover:shadow-[0_12px_32px_rgba(0,98,155,0.08)]"
                   >
                     {/* Clean circular portrait frame */}
-                    <div className="relative mb-4 flex h-36 w-36 items-center justify-center rounded-full border-2 border-[#E3DFD5] bg-white p-1 shadow-sm transition-all duration-300 group-hover:border-[#00629B] group-hover:shadow-[0_8px_24px_rgba(0,98,155,0.14)] sm:h-40 sm:w-40">
+                    <div className="relative mb-4 flex h-44 w-44 items-center justify-center rounded-full border-2 border-[#E3DFD5] bg-white p-1.5 shadow-sm transition-all duration-300 group-hover:border-[#00629B] group-hover:shadow-[0_10px_28px_rgba(0,98,155,0.15)] sm:h-52 sm:w-52">
                       <div className="relative h-full w-full overflow-hidden rounded-full bg-[#F5F3EE]">
                         <Image
                           src={m.image}
                           alt={m.name}
                           fill
-                          sizes="(max-width: 640px) 144px, 160px"
+                          sizes="(max-width: 640px) 176px, 208px"
                           className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>

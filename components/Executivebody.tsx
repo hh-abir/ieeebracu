@@ -91,21 +91,21 @@ const chapters: Chapter[] = [
 function PersonCard({ member }: { member: Member }) {
   return (
     <div className="group flex flex-col items-center text-center">
-      <div className="relative mb-4 flex h-36 w-36 items-center justify-center rounded-full border-2 border-[#E3DFD5] bg-white p-1 shadow-[0_4px_16px_rgba(20,22,24,0.06)] transition-all duration-300 group-hover:border-[#00629B] group-hover:shadow-[0_10px_28px_rgba(0,98,155,0.15)] sm:h-44 sm:w-44">
+      <div className="relative mb-3.5 flex h-48 w-48 items-center justify-center rounded-full border-2 border-[#E3DFD5] bg-white p-1.5 shadow-[0_4px_18px_rgba(20,22,24,0.06)] transition-all duration-300 group-hover:border-[#00629B] group-hover:shadow-[0_12px_32px_rgba(0,98,155,0.18)] sm:h-56 sm:w-56 md:h-60 md:w-60">
         <div className="relative h-full w-full overflow-hidden rounded-full bg-[#F5F3EE]">
           <Image
             src={member.image}
             alt={member.name}
             fill
-            sizes="(max-width: 640px) 144px, 176px"
+            sizes="(max-width: 640px) 192px, (max-width: 768px) 224px, 240px"
             className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
           />
         </div>
       </div>
-      <h3 className="m-0 text-[15px] font-semibold tracking-[-0.01em] text-[#191B1E]">
+      <h3 className="m-0 text-[16.5px] font-semibold tracking-[-0.01em] text-[#191B1E]">
         {member.name}
       </h3>
-      <span className="mt-1 text-[12px] font-medium uppercase tracking-[0.08em] text-[#00629B]">
+      <span className="mt-1 text-[13px] font-medium uppercase tracking-[0.08em] text-[#00629B]">
         {member.role}
       </span>
     </div>
@@ -135,11 +135,11 @@ export default function ExecutiveBody() {
 
         {/* ── Main SB members ── */}
         <div className="mb-6 text-center">
-          <span className="inline-block rounded-md bg-[#0A2540] px-3 py-1.5 font-[family-name:var(--font-serif)] text-[13px] font-semibold tracking-[0.04em] text-white">
+          <span className="inline-block rounded-md bg-[#0A2540] px-3.5 py-1.5 font-[family-name:var(--font-serif)] text-[13px] font-semibold tracking-[0.04em] text-white">
             Student Branch
           </span>
         </div>
-        <div className="mb-20 grid grid-cols-2 justify-items-center gap-x-8 gap-y-10 sm:grid-cols-3 md:grid-cols-4">
+        <div className="mx-auto mb-20 max-w-[1100px] grid grid-cols-2 justify-items-center gap-x-4 gap-y-8 sm:grid-cols-4 sm:gap-x-6 sm:gap-y-10">
           {mainEB.map((m) => (
             <PersonCard key={m.name} member={m} />
           ))}
@@ -252,21 +252,21 @@ export default function ExecutiveBody() {
             </div>
 
             {/* modal body — member grid */}
-            <div className="grid grid-cols-2 justify-items-center gap-x-8 gap-y-10 px-8 py-10 sm:grid-cols-4 sm:px-10 sm:py-12">
+            <div className="grid grid-cols-2 justify-items-center gap-x-4 gap-y-8 px-6 py-8 sm:grid-cols-4 sm:gap-x-6 sm:px-10 sm:py-10">
               {activeChapter.members.map((m) => (
                 <div key={m.name} className="group flex flex-col items-center text-center">
-                  <div className="relative mb-3.5 flex h-32 w-32 items-center justify-center rounded-full border-2 border-[#E3DFD5] bg-white p-1 shadow-sm transition-all duration-300 group-hover:border-[#00629B] group-hover:shadow-[0_8px_24px_rgba(0,98,155,0.14)] sm:h-40 sm:w-40">
+                  <div className="relative mb-3.5 flex h-40 w-40 items-center justify-center rounded-full border-2 border-[#E3DFD5] bg-white p-1.5 shadow-sm transition-all duration-300 group-hover:border-[#00629B] group-hover:shadow-[0_8px_24px_rgba(0,98,155,0.14)] sm:h-48 sm:w-48">
                     <div className="relative h-full w-full overflow-hidden rounded-full bg-[#F5F3EE]">
                       <Image
                         src={m.image}
                         alt={m.name}
                         fill
-                        sizes="(max-width: 640px) 128px, 160px"
+                        sizes="(max-width: 640px) 160px, 192px"
                         className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
                   </div>
-                  <h4 className="m-0 text-[15px] font-semibold text-[#191B1E]">
+                  <h4 className="m-0 text-[15.5px] font-semibold text-[#191B1E]">
                     {m.name}
                   </h4>
                   <span className="mt-1 text-[12px] font-medium uppercase tracking-[0.08em] text-[#00629B]">

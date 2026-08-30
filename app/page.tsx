@@ -1,4 +1,5 @@
 import About from "@/components/About";
+import Achievements from "@/components/Achievements";
 import ChaptersGrid from "@/components/Chaptersgrid";
 import DailyQuote from "@/components/Dailyquote";
 import ExecutiveBody from "@/components/Executivebody";
@@ -11,6 +12,7 @@ export default function Home() {
     <div>
       <HeroCarousel />
       <About />
+      <Achievements />
       <ChaptersGrid />
       <Gallery />
       <ExecutiveBody />

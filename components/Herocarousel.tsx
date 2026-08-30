@@ -132,7 +132,7 @@ export default function HeroCarousel() {
           </div>
 
           {/* structured controls */}
-          <div className="absolute inset-x-8 bottom-10 flex items-center gap-5">
+          <div className="absolute inset-x-8 bottom-14 sm:bottom-16 flex items-center gap-5">
             <div className="flex items-baseline gap-1.5 font-[family-name:var(--font-serif)] text-white">
               <span className="text-[24px] font-semibold">0{current + 1}</span>
               <span className="text-[13px] text-white/60">/ 0{slides.length}</span>
@@ -164,9 +164,9 @@ export default function HeroCarousel() {
         </div>
       </div>
 
-      {/* overlapping stats strip */}
+      {/* stats strip with slight overlay */}
       <div className="mx-auto max-w-[1200px] px-8">
-        <div className="relative z-[5] -mt-11 grid grid-cols-2 overflow-hidden rounded-xl border border-[#E3DFD5] bg-white shadow-[0_16px_40px_rgba(20,22,24,0.08)] md:grid-cols-4">
+        <div className="relative z-[5] -mt-6 sm:-mt-8 grid grid-cols-2 overflow-hidden rounded-xl border border-[#E3DFD5] bg-white shadow-[0_16px_40px_rgba(20,22,24,0.08)] md:grid-cols-4">
           {stats.map((st, i) => (
             <div
               key={st.l}
