@@ -7,32 +7,32 @@ export default function Achievements() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   return (
-    <section className="bg-[#F5F3EE] py-14 font-[family-name:var(--font-sans)] border-t border-[#E3DFD5]">
+    <section className="bg-[#F5F3EE] py-8 sm:py-10 font-[family-name:var(--font-sans)] border-t border-[#E3DFD5]">
       <div className="mx-auto max-w-[1200px] px-8">
         {/* Section Header */}
-        <div className="text-center mb-8">
-          <div className="mb-3 flex items-center justify-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#00629B]">
-            <span className="inline-block h-0.5 w-[26px] bg-[#00629B]" />
+        <div className="text-center mb-4">
+          <div className="mb-1.5 flex items-center justify-center gap-2 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-[#00629B]">
+            <span className="inline-block h-0.5 w-[20px] bg-[#00629B]" />
             Recognition
-            <span className="inline-block h-0.5 w-[26px] bg-[#00629B]" />
+            <span className="inline-block h-0.5 w-[20px] bg-[#00629B]" />
           </div>
-          <h2 className="m-0 font-[family-name:var(--font-serif)] text-[clamp(26px,3vw,36px)] font-semibold tracking-[-0.02em] text-[#191B1E]">
+          <h2 className="m-0 font-[family-name:var(--font-serif)] text-[clamp(24px,2.8vw,32px)] font-semibold tracking-[-0.02em] text-[#191B1E]">
             Our Achievements
           </h2>
         </div>
 
-        {/* Image Container - Natural Height */}
+        {/* Image Container - Strictly Natural Height */}
         <div
           onClick={() => setLightboxOpen(true)}
-          className="group relative cursor-pointer overflow-hidden rounded-2xl border border-[#E3DFD5] bg-white p-2 shadow-sm transition-all duration-300 hover:border-[#00629B]/30 hover:shadow-md"
+          className="group relative cursor-pointer overflow-hidden rounded-xl border border-[#E3DFD5] bg-white p-1.5 shadow-sm transition-all duration-300 hover:border-[#00629B]/35 hover:shadow-md"
         >
-          <div className="relative w-full overflow-hidden rounded-xl bg-white">
+          <div className="relative w-full overflow-hidden rounded-lg bg-white">
             <Image
               src="https://ieeebracu.com/wp-content/uploads/2020/05/rsz_achievements_for_website-01.jpg"
               alt="Our Achievements - IEEE BRAC University Student Branch"
               width={1200}
               height={560}
-              className="h-auto w-full object-contain transition-transform duration-500 group-hover:scale-[1.01]"
+              className="h-auto w-full object-contain transition-transform duration-500 group-hover:scale-[1.008]"
               priority
             />
           </div>

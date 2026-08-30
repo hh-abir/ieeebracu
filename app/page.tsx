@@ -6,6 +6,7 @@ import ExecutiveBody from "@/components/Executivebody";
 import Gallery from "@/components/Gallery";
 import HeroCarousel from "@/components/Herocarousel";
 import LatestNews from "@/components/Latestnews";
+import MembersCount from "@/components/Memberscount";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <ChaptersGrid />
       <Gallery />
       <ExecutiveBody />
+      <MembersCount />
       <LatestNews />
       <DailyQuote />
     </div>

@@ -131,13 +131,13 @@ export default function HeroCarousel() {
             </div>
           </div>
 
-          {/* structured controls */}
-          <div className="absolute inset-x-8 bottom-14 sm:bottom-16 flex items-center gap-5">
+          {/* structured controls positioned on the right */}
+          <div className="absolute right-8 bottom-14 sm:bottom-16 flex items-center gap-4 sm:gap-5">
             <div className="flex items-baseline gap-1.5 font-[family-name:var(--font-serif)] text-white">
-              <span className="text-[24px] font-semibold">0{current + 1}</span>
-              <span className="text-[13px] text-white/60">/ 0{slides.length}</span>
+              <span className="text-[22px] sm:text-[24px] font-semibold">0{current + 1}</span>
+              <span className="text-[12px] sm:text-[13px] text-white/60">/ 0{slides.length}</span>
             </div>
-            <div className="h-0.5 max-w-[220px] flex-1 overflow-hidden bg-white/25">
+            <div className="hidden sm:block h-0.5 w-[140px] md:w-[180px] overflow-hidden bg-white/25">
               <span
                 key={current}
                 className="block h-full w-0 bg-white"
@@ -148,14 +148,14 @@ export default function HeroCarousel() {
               <button
                 onClick={() => go(-1)}
                 aria-label="Previous slide"
-                className="flex h-[42px] w-[42px] items-center justify-center rounded-full border border-white/40 bg-white/[0.06] text-[20px] leading-none text-white transition-colors hover:bg-white hover:text-[#0A2540]"
+                className="flex h-[38px] w-[38px] sm:h-[42px] sm:w-[42px] items-center justify-center rounded-full border border-white/40 bg-white/[0.06] text-[18px] sm:text-[20px] leading-none text-white transition-colors hover:bg-white hover:text-[#0A2540]"
               >
                 ‹
               </button>
               <button
                 onClick={() => go(1)}
                 aria-label="Next slide"
-                className="flex h-[42px] w-[42px] items-center justify-center rounded-full border border-white/40 bg-white/[0.06] text-[20px] leading-none text-white transition-colors hover:bg-white hover:text-[#0A2540]"
+                className="flex h-[38px] w-[38px] sm:h-[42px] sm:w-[42px] items-center justify-center rounded-full border border-white/40 bg-white/[0.06] text-[18px] sm:text-[20px] leading-none text-white transition-colors hover:bg-white hover:text-[#0A2540]"
               >
                 ›
               </button>
