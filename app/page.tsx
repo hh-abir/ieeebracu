@@ -1,6 +1,5 @@
 import About from "@/components/About";
 import ChaptersGrid from "@/components/Chaptersgrid";
-import DailyQuote from "@/components/Dailyquote";
 import ExecutiveBody from "@/components/Executivebody ";
 import Gallery from "@/components/Gallery";
 import HeroCarousel from "@/components/Herocarousel";

@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export const metadata = { title: "BRAC University Student Branch — IEEE BRACU SB" };
 
 export default function AboutBranchPage() {

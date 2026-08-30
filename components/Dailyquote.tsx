@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 type Quote = {
   text: string;
   author: string;
