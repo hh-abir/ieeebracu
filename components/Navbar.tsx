@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 
 const chapters = [
@@ -175,19 +176,16 @@ export default function Navbar() {
       {/* main nav */}
       <header className="sticky top-0 z-50 border-b border-[#E3DFD5] bg-white/92 backdrop-blur-md">
         <div className="mx-auto flex h-[68px] max-w-[1200px] items-center justify-between px-8">
-          {/* brand */}
-          <Link href="/" className="flex items-center gap-3">
-            <span className="rounded-[3px] border-[1.5px] border-[#0A2540] px-2 py-[3px] font-[family-name:var(--font-serif)] text-[20px] font-semibold tracking-[0.06em] text-[#0A2540]">
-              IEEE
-            </span>
-            <span className="flex flex-col leading-[1.15]">
-              <span className="text-[14px] font-semibold tracking-[-0.01em] text-[#191B1E]">
-                BRAC University
-              </span>
-              <span className="text-[10.5px] uppercase tracking-[0.16em] text-[#6E7178]">
-                Student Branch
-              </span>
-            </span>
+          {/* brand logo */}
+          <Link href="/" className="flex items-center py-1">
+            <Image
+              src="https://ieeebracu.com/wp-content/uploads/2022/01/Artboard-1-1.png"
+              alt="IEEE BRAC University Student Branch"
+              width={220}
+              height={50}
+              className="h-10 w-auto object-contain transition-opacity hover:opacity-90 sm:h-11"
+              priority
+            />
           </Link>
 
           {/* desktop links */}
