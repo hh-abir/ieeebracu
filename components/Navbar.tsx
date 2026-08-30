@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const chapters = [
   { name: "Power & Energy Society", slug: "pes" },
@@ -12,13 +12,36 @@ const chapters = [
   { name: "Electron Devices Society", slug: "eds" },
 ];
 
+const newsletterYears = [2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2010, 2009, 2008];
+
 export default function Navbar() {
   const [chaptersOpen, setChaptersOpen] = useState(false);
   const [membersOpen, setMembersOpen] = useState(false);
   const [membershipSubOpen, setMembershipSubOpen] = useState(false);
+  const [carcOpen, setCarcOpen] = useState(false);
+  const [newsletterModalOpen, setNewsletterModalOpen] = useState(false);
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileMembersOpen, setMobileMembersOpen] = useState(false);
   const [mobileMembershipOpen, setMobileMembershipOpen] = useState(false);
+  const [mobileCarcOpen, setMobileCarcOpen] = useState(false);
+
+  // Close modal on Escape key press & lock scroll
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setNewsletterModalOpen(false);
+      }
+    };
+    if (newsletterModalOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "unset";
+    };
+  }, [newsletterModalOpen]);
 
   return (
     <div className="font-[family-name:var(--font-sans)]">
@@ -164,6 +187,58 @@ export default function Navbar() {
               )}
             </div>
 
+            {/* CARC SIGHT dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setCarcOpen(true)}
+              onMouseLeave={() => setCarcOpen(false)}
+            >
+              <button className="flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[13.5px] font-medium text-[#3C4046] transition-colors hover:bg-[#EEEAE0] hover:text-[#191B1E]">
+                CARC SIGHT
+                <svg
+                  className={`h-2.5 w-2.5 text-[#9A9E9F] transition-transform ${carcOpen ? "rotate-180" : ""}`}
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path d="M5.2 7.2a.75.75 0 011.06.02L10 11.17l3.72-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0L5.2 8.27a.75.75 0 01.02-1.06z" />
+                </svg>
+              </button>
+              {carcOpen && (
+                <div className="absolute left-1/2 top-full w-[310px] -translate-x-1/2 pt-2">
+                  <div className="rounded-[10px] border border-[#E3DFD5] bg-white p-1.5 shadow-[0_12px_30px_rgba(20,22,24,0.10)]">
+                    <a
+                      href="https://ieeebracu.com/carg-sight/carc/carc.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block rounded-md px-3 py-2 text-[13px] text-[#4A4E54] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                    >
+                      Control and Applications Research Center
+                    </a>
+                    <a
+                      href="https://sight.ieee.org/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block rounded-md px-3 py-2 text-[13px] text-[#4A4E54] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                    >
+                      IEEE CARC SIGHT Bangladesh
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Newsletter Button */}
+            <button
+              onClick={() => setNewsletterModalOpen(true)}
+              className="flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[13.5px] font-medium text-[#3C4046] transition-colors hover:bg-[#EEEAE0] hover:text-[#00629B]"
+            >
+              <span>Newsletter</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+              </svg>
+            </button>
+
             <Link href="/about" className="rounded-md px-3.5 py-2 text-[13.5px] font-medium text-[#3C4046] transition-colors hover:bg-[#EEEAE0] hover:text-[#191B1E]">
               About
             </Link>
@@ -262,6 +337,48 @@ export default function Navbar() {
                 </div>
               )}
 
+              {/* CARC SIGHT accordion */}
+              <button
+                onClick={() => setMobileCarcOpen((v) => !v)}
+                className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-[#3C4046] hover:bg-[#F5F3EE]"
+              >
+                CARC SIGHT <span>{mobileCarcOpen ? "\u2212" : "+"}</span>
+              </button>
+              {mobileCarcOpen && (
+                <div className="pl-4">
+                  <a
+                    href="https://ieeebracu.com/carg-sight/carc/carc.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block rounded-md px-3 py-1.5 text-xs text-[#6E7178] hover:bg-[#F5F3EE]"
+                  >
+                    Control and Applications Research Center
+                  </a>
+                  <a
+                    href="https://sight.ieee.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block rounded-md px-3 py-1.5 text-xs text-[#6E7178] hover:bg-[#F5F3EE]"
+                  >
+                    IEEE CARC SIGHT Bangladesh
+                  </a>
+                </div>
+              )}
+
+              {/* Mobile Newsletter button */}
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  setNewsletterModalOpen(true);
+                }}
+                className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-[#3C4046] hover:bg-[#F5F3EE]"
+              >
+                <span>Newsletter</span>
+                <span className="rounded bg-[#EAF1F6] px-2 py-0.5 text-[11px] font-semibold text-[#00629B]">
+                  By Year
+                </span>
+              </button>
+
               <Link href="/about" className="block rounded-md px-3 py-2 text-sm text-[#3C4046] hover:bg-[#F5F3EE]">
                 About
               </Link>
@@ -275,6 +392,90 @@ export default function Navbar() {
           </div>
         )}
       </header>
+
+      {/* ── Right-Side Slide-Over Newsletter Modal (List of Years Only) ── */}
+      {newsletterModalOpen && (
+        <div className="fixed inset-0 z-50 overflow-hidden">
+          {/* Backdrop overlay */}
+          <div
+            onClick={() => setNewsletterModalOpen(false)}
+            className="fixed inset-0 bg-[#0A2540]/60 backdrop-blur-sm transition-opacity"
+            aria-hidden="true"
+          />
+
+          <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
+            <div className="relative w-screen max-w-[420px] bg-white shadow-2xl flex flex-col">
+              {/* Drawer Header */}
+              <div className="border-b border-[#E3DFD5] bg-[#0A2540] p-6 text-white">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="flex items-center gap-2 text-[11.5px] font-semibold uppercase tracking-[0.14em] text-[#7FB4DA]">
+                      <span className="inline-block h-0.5 w-[20px] bg-[#7FB4DA]" />
+                      Publications
+                    </div>
+                    <h2 className="m-0 mt-1 font-[family-name:var(--font-serif)] text-[24px] font-semibold text-white">
+                      Newsletter
+                    </h2>
+                    <p className="m-0 mt-1 text-[13px] text-white/65">
+                      Select a year to browse newsletters and publications archive.
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => setNewsletterModalOpen(false)}
+                    className="rounded-full bg-white/10 p-2 text-white/80 transition-colors hover:bg-white/20 hover:text-white"
+                    aria-label="Close panel"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              {/* Drawer Body: Clean List of Years */}
+              <div className="flex-1 overflow-y-auto bg-[#FBFAF7] p-5 space-y-2.5">
+                {newsletterYears.map((year) => (
+                  <a
+                    key={year}
+                    href={`https://ieeebracu.com/${year}/`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between rounded-xl border border-[#E3DFD5] bg-white p-4 transition-all duration-200 hover:border-[#00629B]/40 hover:bg-[#F5F3EE] hover:shadow-sm"
+                  >
+                    <div className="flex items-center gap-3.5">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#EAF1F6] text-[#00629B] font-[family-name:var(--font-serif)] font-bold text-[15px] group-hover:bg-[#00629B] group-hover:text-white transition-colors">
+                        {year.toString().slice(-2)}
+                      </div>
+                      <div>
+                        <span className="font-[family-name:var(--font-serif)] text-[17px] font-semibold text-[#191B1E] group-hover:text-[#00629B] transition-colors">
+                          Newsletter {year}
+                        </span>
+                        <p className="m-0 text-[12px] text-[#6E7178]">
+                          {year} Publications Archive
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FBFAF7] text-[#9A9E9F] transition-all group-hover:translate-x-1 group-hover:bg-[#00629B] group-hover:text-white">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                  </a>
+                ))}
+              </div>
+
+              {/* Drawer Footer */}
+              <div className="border-t border-[#E3DFD5] bg-white p-4 text-center">
+                <p className="m-0 text-[12px] text-[#6E7178]">
+                  IEEE BRAC University Student Branch &copy; {new Date().getFullYear()}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
