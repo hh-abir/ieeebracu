@@ -130,7 +130,7 @@ export default function Gallery() {
   }, [activePhoto]);
 
   return (
-    <section className="relative overflow-hidden bg-[#0A2540] pt-6 pb-8 sm:pt-8 sm:pb-10 font-[family-name:var(--font-sans)] text-white">
+    <section className="relative overflow-hidden bg-[#0A2540] py-10 sm:py-14 font-[family-name:var(--font-sans)] text-white">
       {/* Background ambient lighting */}
       <div
         className="pointer-events-none absolute inset-0 opacity-20"
@@ -141,14 +141,14 @@ export default function Gallery() {
       />
 
       {/* Header Container */}
-      <div className="relative mx-auto mb-4 sm:mb-5 max-w-[1320px] px-4 sm:px-8">
+      <div className="relative mx-auto mb-5 sm:mb-6 max-w-[1320px] px-4 sm:px-8">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <div className="mb-1 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#7FB4DA]">
+            <div className="mb-1.5 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#7FB4DA]">
               <span className="inline-block h-0.5 w-5 bg-[#7FB4DA]" />
               In Focus
             </div>
-            <h2 className="m-0 font-[family-name:var(--font-serif)] text-[clamp(20px,2.5vw,30px)] font-bold tracking-tight text-white">
+            <h2 className="m-0 font-[family-name:var(--font-serif)] text-[clamp(22px,2.8vw,32px)] font-bold tracking-tight text-white">
               Moments from the Branch
             </h2>
           </div>
