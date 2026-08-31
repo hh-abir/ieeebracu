@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const chapters = [
   { name: "Power & Energy Society", slug: "pes" },
@@ -15,7 +16,56 @@ const chapters = [
 
 const newsletterYears = [2026, 2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2010, 2009, 2008];
 
+const routeLabels: Record<string, string> = {
+  news: "News & Events",
+  members: "Members",
+  "membership-benefits": "Membership Benefits",
+  "why-how-do-you-join-ieee": "Why & How to Join",
+  chapters: "Chapters",
+  pes: "Power & Energy Society (PES)",
+  cs: "Computer Society (CS)",
+  ras: "Robotics & Automation Society (RAS)",
+  aess: "Aerospace & Electronic Systems (AESS)",
+  comsoc: "Communications Society (ComSoc)",
+  eds: "Electron Devices Society (EDS)",
+  about: "About",
+  branch: "About the Branch",
+  ieee: "About IEEE",
+  organogram: "Organogram",
+  logos: "Logos & Resources",
+  "ibm-visit": "IBM Visit",
+  contact: "Contact",
+  join: "Join IEEE",
+  "join-ieee-bracu-sb": "Join IEEE BRACU SB",
+  gallery: "Gallery",
+};
+
+function generateBreadcrumbs(pathname: string) {
+  const segments = pathname.split("/").filter(Boolean);
+  let currentPath = "";
+
+  return segments.map((seg, idx) => {
+    currentPath += `/${seg}`;
+    const cleanSeg = decodeURIComponent(seg).toLowerCase();
+    const label =
+      routeLabels[cleanSeg] ||
+      cleanSeg
+        .split("-")
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+
+    return {
+      label,
+      href: currentPath,
+      isLast: idx === segments.length - 1,
+    };
+  });
+}
+
 export default function Navbar() {
+  const pathname = usePathname() || "/";
+  const breadcrumbs = generateBreadcrumbs(pathname);
+
   const [chaptersOpen, setChaptersOpen] = useState(false);
   const [membersOpen, setMembersOpen] = useState(false);
   const [membershipSubOpen, setMembershipSubOpen] = useState(false);
@@ -192,13 +242,33 @@ export default function Navbar() {
           {/* desktop links */}
           <nav className="hidden items-center gap-1 md:flex">
             {/* 1. Home */}
-            <Link href="/" className="rounded-md px-3.5 py-2 text-[13.5px] font-medium text-[#3C4046] transition-colors hover:bg-[#EEEAE0] hover:text-[#191B1E]">
+            <Link
+              href="/"
+              className={`relative rounded-md px-3.5 py-2 text-[13.5px] font-medium transition-colors ${
+                pathname === "/"
+                  ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                  : "text-[#3C4046] hover:bg-[#EEEAE0] hover:text-[#191B1E]"
+              }`}
+            >
               Home
+              {pathname === "/" && (
+                <span className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-[#00629B]" />
+              )}
             </Link>
 
             {/* 2. News */}
-            <Link href="/news" className="rounded-md px-3.5 py-2 text-[13.5px] font-medium text-[#3C4046] transition-colors hover:bg-[#EEEAE0] hover:text-[#191B1E]">
+            <Link
+              href="/news"
+              className={`relative rounded-md px-3.5 py-2 text-[13.5px] font-medium transition-colors ${
+                pathname.startsWith("/news")
+                  ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                  : "text-[#3C4046] hover:bg-[#EEEAE0] hover:text-[#191B1E]"
+              }`}
+            >
               News
+              {pathname.startsWith("/news") && (
+                <span className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-[#00629B]" />
+              )}
             </Link>
 
             {/* 3. Members multi-level dropdown */}
@@ -210,7 +280,13 @@ export default function Navbar() {
                 setMembershipSubOpen(false);
               }}
             >
-              <button className="flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[13.5px] font-medium text-[#3C4046] transition-colors hover:bg-[#EEEAE0] hover:text-[#191B1E]">
+              <button
+                className={`relative flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[13.5px] font-medium transition-colors ${
+                  pathname.startsWith("/members")
+                    ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                    : "text-[#3C4046] hover:bg-[#EEEAE0] hover:text-[#191B1E]"
+                }`}
+              >
                 Members
                 <svg
                   className={`h-2.5 w-2.5 text-[#9A9E9F] transition-transform ${membersOpen ? "rotate-180" : ""}`}
@@ -219,6 +295,9 @@ export default function Navbar() {
                 >
                   <path d="M5.2 7.2a.75.75 0 011.06.02L10 11.17l3.72-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0L5.2 8.27a.75.75 0 01.02-1.06z" />
                 </svg>
+                {pathname.startsWith("/members") && (
+                  <span className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-[#00629B]" />
+                )}
               </button>
 
               {membersOpen && (
@@ -230,7 +309,14 @@ export default function Navbar() {
                       onMouseEnter={() => setMembershipSubOpen(true)}
                       onMouseLeave={() => setMembershipSubOpen(false)}
                     >
-                      <div className="flex cursor-pointer items-center justify-between rounded-md px-3 py-2 text-[13px] text-[#4A4E54] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]">
+                      <div
+                        className={`flex cursor-pointer items-center justify-between rounded-md px-3 py-2 text-[13px] transition-colors ${
+                          pathname === "/members/why-how-do-you-join-ieee" ||
+                          pathname === "/members/membership-benefits"
+                            ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                            : "text-[#4A4E54] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                        }`}
+                      >
                         <span>Membership</span>
                         <svg className="h-3 w-3 text-[#9A9E9F]" viewBox="0 0 20 20" fill="currentColor">
                           <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
@@ -243,13 +329,21 @@ export default function Navbar() {
                           <div className="rounded-[10px] border border-[#E3DFD5] bg-white p-1.5 shadow-[0_12px_30px_rgba(20,22,24,0.12)]">
                             <Link
                               href="/members/why-how-do-you-join-ieee"
-                              className="block rounded-md px-3 py-2 text-[13px] text-[#4A4E54] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                              className={`block rounded-md px-3 py-2 text-[13px] transition-colors ${
+                                pathname === "/members/why-how-do-you-join-ieee"
+                                  ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                                  : "text-[#4A4E54] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                              }`}
                             >
                               Why &amp; How Do You Join IEEE?
                             </Link>
                             <Link
                               href="/members/membership-benefits"
-                              className="block rounded-md px-3 py-2 text-[13px] text-[#4A4E54] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                              className={`block rounded-md px-3 py-2 text-[13px] transition-colors ${
+                                pathname === "/members/membership-benefits"
+                                  ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                                  : "text-[#4A4E54] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                              }`}
                             >
                               Membership Benefits
                             </Link>
@@ -261,7 +355,11 @@ export default function Navbar() {
                     {/* Memberlist by Year */}
                     <Link
                       href="/members"
-                      className="block rounded-md px-3 py-2 text-[13px] text-[#4A4E54] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                      className={`block rounded-md px-3 py-2 text-[13px] transition-colors ${
+                        pathname === "/members"
+                          ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                          : "text-[#4A4E54] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                      }`}
                     >
                       Memberlist by Year
                     </Link>
@@ -284,7 +382,13 @@ export default function Navbar() {
               onMouseEnter={() => setChaptersOpen(true)}
               onMouseLeave={() => setChaptersOpen(false)}
             >
-              <button className="flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[13.5px] font-medium text-[#3C4046] transition-colors hover:bg-[#EEEAE0] hover:text-[#191B1E]">
+              <button
+                className={`relative flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[13.5px] font-medium transition-colors ${
+                  pathname.startsWith("/chapters")
+                    ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                    : "text-[#3C4046] hover:bg-[#EEEAE0] hover:text-[#191B1E]"
+                }`}
+              >
                 Chapters
                 <svg
                   className={`h-2.5 w-2.5 text-[#9A9E9F] transition-transform ${chaptersOpen ? "rotate-180" : ""}`}
@@ -293,6 +397,9 @@ export default function Navbar() {
                 >
                   <path d="M5.2 7.2a.75.75 0 011.06.02L10 11.17l3.72-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0L5.2 8.27a.75.75 0 01.02-1.06z" />
                 </svg>
+                {pathname.startsWith("/chapters") && (
+                  <span className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-[#00629B]" />
+                )}
               </button>
               {chaptersOpen && (
                 <div className="absolute left-1/2 top-full w-[278px] -translate-x-1/2 pt-2">
@@ -301,7 +408,11 @@ export default function Navbar() {
                       <Link
                         key={c.slug}
                         href={`/chapters/${c.slug}`}
-                        className="block rounded-md px-3 py-2 text-[13px] text-[#4A4E54] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                        className={`block rounded-md px-3 py-2 text-[13px] transition-colors ${
+                          pathname === `/chapters/${c.slug}`
+                            ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                            : "text-[#4A4E54] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                        }`}
                       >
                         {c.name}
                       </Link>
@@ -312,8 +423,18 @@ export default function Navbar() {
             </div>
 
             {/* 6. About */}
-            <Link href="/about" className="rounded-md px-3.5 py-2 text-[13.5px] font-medium text-[#3C4046] transition-colors hover:bg-[#EEEAE0] hover:text-[#191B1E]">
+            <Link
+              href="/about"
+              className={`relative rounded-md px-3.5 py-2 text-[13.5px] font-medium transition-colors ${
+                pathname.startsWith("/about")
+                  ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                  : "text-[#3C4046] hover:bg-[#EEEAE0] hover:text-[#191B1E]"
+              }`}
+            >
               About
+              {pathname.startsWith("/about") && (
+                <span className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-[#00629B]" />
+              )}
             </Link>
 
             {/* 7. CARC SIGHT dropdown */}
@@ -359,10 +480,24 @@ export default function Navbar() {
 
           {/* actions */}
           <div className="flex items-center gap-3.5">
-            <Link href="/contact" className="hidden text-[13.5px] font-medium text-[#3C4046] hover:text-[#191B1E] md:block">
+            <Link
+              href="/contact"
+              className={`hidden text-[13.5px] font-medium transition-colors md:block ${
+                pathname.startsWith("/contact")
+                  ? "text-[#00629B] font-semibold"
+                  : "text-[#3C4046] hover:text-[#191B1E]"
+              }`}
+            >
               Contact
             </Link>
-            <Link href="/join" className="hidden rounded-[7px] bg-[#00629B] px-[18px] py-[9px] text-[13.5px] font-semibold text-white transition-colors hover:bg-[#004E7C] md:block">
+            <Link
+              href="/join"
+              className={`hidden rounded-[7px] px-[18px] py-[9px] text-[13.5px] font-semibold text-white transition-all md:block ${
+                pathname.startsWith("/join")
+                  ? "bg-[#0A2540] shadow-md ring-2 ring-[#00629B]"
+                  : "bg-[#00629B] hover:bg-[#004E7C]"
+              }`}
+            >
               Join IEEE
             </Link>
 
@@ -382,6 +517,45 @@ export default function Navbar() {
             </button>
           </div>
         </div>
+
+        {/* ── Dynamic Breadcrumbs Strip (shown on all subpages) ── */}
+        {pathname !== "/" && (
+          <div className="border-t border-[#E3DFD5] bg-[#F5F3EE]/90">
+            <div className="mx-auto flex h-9 max-w-[1200px] items-center px-4 sm:px-8 text-[12px] text-[#6E7178]">
+              <nav aria-label="Breadcrumb" className="flex items-center space-x-1.5 overflow-x-auto whitespace-nowrap scrollbar-none py-1">
+                <Link
+                  href="/"
+                  className="inline-flex items-center gap-1 font-medium text-[#4A4E54] hover:text-[#00629B] transition-colors"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </svg>
+                  <span>Home</span>
+                </Link>
+                {breadcrumbs.map((crumb) => (
+                  <div key={crumb.href} className="flex items-center space-x-1.5">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#A9ACB2]">
+                      <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    {crumb.isLast ? (
+                      <span className="font-semibold text-[#00629B] truncate max-w-[180px] sm:max-w-[320px]">
+                        {crumb.label}
+                      </span>
+                    ) : (
+                      <Link
+                        href={crumb.href}
+                        className="font-medium text-[#4A4E54] hover:text-[#00629B] transition-colors"
+                      >
+                        {crumb.label}
+                      </Link>
+                    )}
+                  </div>
+                ))}
+              </nav>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* ── Right-Side Slide-Over Mobile Menu Dialog ── */}
@@ -432,7 +606,11 @@ export default function Navbar() {
                 <Link
                   href="/"
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                  className={`flex items-center rounded-lg px-3.5 py-2.5 text-[14.5px] transition-colors ${
+                    pathname === "/"
+                      ? "bg-[#EAF1F6] text-[#00629B] font-semibold border-l-4 border-[#00629B]"
+                      : "font-medium text-[#191B1E] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                  }`}
                 >
                   Home
                 </Link>
@@ -441,7 +619,11 @@ export default function Navbar() {
                 <Link
                   href="/news"
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                  className={`flex items-center rounded-lg px-3.5 py-2.5 text-[14.5px] transition-colors ${
+                    pathname.startsWith("/news")
+                      ? "bg-[#EAF1F6] text-[#00629B] font-semibold border-l-4 border-[#00629B]"
+                      : "font-medium text-[#191B1E] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                  }`}
                 >
                   News
                 </Link>
@@ -450,7 +632,11 @@ export default function Navbar() {
                 <div className="rounded-lg">
                   <button
                     onClick={() => setMobileMembersOpen((v) => !v)}
-                    className="flex w-full items-center justify-between rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                    className={`flex w-full items-center justify-between rounded-lg px-3.5 py-2.5 text-[14.5px] transition-colors ${
+                      pathname.startsWith("/members")
+                        ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                        : "font-medium text-[#191B1E] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                    }`}
                   >
                     <span>Members</span>
                     <svg
@@ -474,7 +660,7 @@ export default function Navbar() {
                           viewBox="0 0 20 20"
                           fill="currentColor"
                         >
-                          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 010 1.08l-4.25 4.5a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
+                          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
                         </svg>
                       </button>
                       {mobileMembershipOpen && (
@@ -482,14 +668,22 @@ export default function Navbar() {
                           <Link
                             href="/members/why-how-do-you-join-ieee"
                             onClick={() => setMobileOpen(false)}
-                            className="block rounded-md px-3 py-1.5 text-[12.5px] text-[#6E7178] hover:text-[#00629B]"
+                            className={`block rounded-md px-3 py-1.5 text-[12.5px] transition-colors ${
+                              pathname === "/members/why-how-do-you-join-ieee"
+                                ? "font-semibold text-[#00629B]"
+                                : "text-[#6E7178] hover:text-[#00629B]"
+                            }`}
                           >
                             Why &amp; How Do You Join IEEE?
                           </Link>
                           <Link
                             href="/members/membership-benefits"
                             onClick={() => setMobileOpen(false)}
-                            className="block rounded-md px-3 py-1.5 text-[12.5px] text-[#6E7178] hover:text-[#00629B]"
+                            className={`block rounded-md px-3 py-1.5 text-[12.5px] transition-colors ${
+                              pathname === "/members/membership-benefits"
+                                ? "font-semibold text-[#00629B]"
+                                : "text-[#6E7178] hover:text-[#00629B]"
+                            }`}
                           >
                             Membership Benefits
                           </Link>
@@ -498,7 +692,11 @@ export default function Navbar() {
                       <Link
                         href="/members"
                         onClick={() => setMobileOpen(false)}
-                        className="block rounded-lg px-3 py-2 text-[13.5px] font-medium text-[#4A4E54] hover:bg-[#E3DFD5]/50 hover:text-[#00629B]"
+                        className={`block rounded-lg px-3 py-2 text-[13.5px] transition-colors ${
+                          pathname === "/members"
+                            ? "bg-[#E3DFD5]/70 text-[#00629B] font-semibold"
+                            : "font-medium text-[#4A4E54] hover:bg-[#E3DFD5]/50 hover:text-[#00629B]"
+                        }`}
                       >
                         Memberlist by Year
                       </Link>
@@ -524,7 +722,11 @@ export default function Navbar() {
                 <div className="rounded-lg">
                   <button
                     onClick={() => setChaptersOpen((v) => !v)}
-                    className="flex w-full items-center justify-between rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                    className={`flex w-full items-center justify-between rounded-lg px-3.5 py-2.5 text-[14.5px] transition-colors ${
+                      pathname.startsWith("/chapters")
+                        ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                        : "font-medium text-[#191B1E] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                    }`}
                   >
                     <span>Chapters</span>
                     <svg
@@ -542,7 +744,11 @@ export default function Navbar() {
                           key={c.slug}
                           href={`/chapters/${c.slug}`}
                           onClick={() => setMobileOpen(false)}
-                          className="block rounded-lg px-3 py-1.5 text-[13px] text-[#4A4E54] hover:text-[#00629B]"
+                          className={`block rounded-lg px-3 py-1.5 text-[13px] transition-colors ${
+                            pathname === `/chapters/${c.slug}`
+                              ? "bg-[#E3DFD5]/70 text-[#00629B] font-semibold"
+                              : "text-[#4A4E54] hover:text-[#00629B]"
+                          }`}
                         >
                           {c.name}
                         </Link>
@@ -555,7 +761,11 @@ export default function Navbar() {
                 <Link
                   href="/about"
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                  className={`flex items-center rounded-lg px-3.5 py-2.5 text-[14.5px] transition-colors ${
+                    pathname.startsWith("/about")
+                      ? "bg-[#EAF1F6] text-[#00629B] font-semibold border-l-4 border-[#00629B]"
+                      : "font-medium text-[#191B1E] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                  }`}
                 >
                   About
                 </Link>
@@ -601,7 +811,11 @@ export default function Navbar() {
                 <Link
                   href="/contact"
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                  className={`flex items-center rounded-lg px-3.5 py-2.5 text-[14.5px] transition-colors ${
+                    pathname.startsWith("/contact")
+                      ? "bg-[#EAF1F6] text-[#00629B] font-semibold border-l-4 border-[#00629B]"
+                      : "font-medium text-[#191B1E] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                  }`}
                 >
                   Contact
                 </Link>
