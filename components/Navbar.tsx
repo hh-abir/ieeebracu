@@ -29,10 +29,11 @@ const routeLabels: Record<string, string> = {
   comsoc: "Communications Society (ComSoc)",
   eds: "Electron Devices Society (EDS)",
   about: "About",
-  branch: "About the Branch",
+  branch: "Student Branch",
   ieee: "About IEEE",
   organogram: "Organogram",
-  logos: "Logos & Resources",
+  resources: "Resources",
+  logos: "Resources",
   "ibm-visit": "IBM Visit",
   contact: "Contact",
   join: "Join IEEE",
@@ -69,12 +70,14 @@ export default function Navbar() {
   const [chaptersOpen, setChaptersOpen] = useState(false);
   const [membersOpen, setMembersOpen] = useState(false);
   const [membershipSubOpen, setMembershipSubOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [carcOpen, setCarcOpen] = useState(false);
   const [newsletterModalOpen, setNewsletterModalOpen] = useState(false);
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileMembersOpen, setMobileMembersOpen] = useState(false);
   const [mobileMembershipOpen, setMobileMembershipOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileCarcOpen, setMobileCarcOpen] = useState(false);
 
   // Close modal or mobile drawer on Escape key press & lock scroll
@@ -422,20 +425,98 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* 6. About */}
-            <Link
-              href="/about"
-              className={`relative rounded-md px-3.5 py-2 text-[13.5px] font-medium transition-colors ${
-                pathname.startsWith("/about")
-                  ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
-                  : "text-[#3C4046] hover:bg-[#EEEAE0] hover:text-[#191B1E]"
-              }`}
+            {/* 6. About multi-level dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setAboutOpen(true)}
+              onMouseLeave={() => setAboutOpen(false)}
             >
-              About
-              {pathname.startsWith("/about") && (
-                <span className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-[#00629B]" />
+              <button
+                className={`relative flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[13.5px] font-medium transition-colors ${
+                  pathname.startsWith("/about")
+                    ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                    : "text-[#3C4046] hover:bg-[#EEEAE0] hover:text-[#191B1E]"
+                }`}
+              >
+                About
+                <svg
+                  className={`h-2.5 w-2.5 text-[#9A9E9F] transition-transform ${aboutOpen ? "rotate-180" : ""}`}
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path d="M5.2 7.2a.75.75 0 011.06.02L10 11.17l3.72-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0L5.2 8.27a.75.75 0 01.02-1.06z" />
+                </svg>
+                {pathname.startsWith("/about") && (
+                  <span className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-[#00629B]" />
+                )}
+              </button>
+
+              {aboutOpen && (
+                <div className="absolute left-0 top-full w-[310px] pt-2">
+                  <div className="rounded-[10px] border border-[#E3DFD5] bg-white p-1.5 shadow-[0_12px_30px_rgba(20,22,24,0.10)]">
+                    {/* About IEEE */}
+                    <Link
+                      href="/about/ieee"
+                      className={`block rounded-md px-3 py-2 text-[13px] transition-colors ${
+                        pathname === "/about/ieee"
+                          ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                          : "text-[#4A4E54] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                      }`}
+                    >
+                      About IEEE
+                    </Link>
+
+                    {/* Student Branch */}
+                    <Link
+                      href="/about/branch"
+                      className={`block rounded-md px-3 py-2 text-[13px] transition-colors ${
+                        pathname === "/about/branch"
+                          ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                          : "text-[#4A4E54] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                      }`}
+                    >
+                      Student Branch
+                    </Link>
+
+                    {/* Organogram */}
+                    <Link
+                      href="/about/organogram"
+                      className={`block rounded-md px-3 py-2 text-[13px] transition-colors ${
+                        pathname === "/about/organogram"
+                          ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                          : "text-[#4A4E54] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                      }`}
+                    >
+                      Organogram
+                    </Link>
+
+                    {/* Resources */}
+                    <Link
+                      href="/about/resources"
+                      className={`block rounded-md px-3 py-2 text-[13px] transition-colors ${
+                        pathname === "/about/resources"
+                          ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                          : "text-[#4A4E54] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                      }`}
+                    >
+                      Resources
+                    </Link>
+
+                    {/* IEEE Foundation President and IBM Research Director Visit BRACU */}
+                    <Link
+                      href="/about/ibm-visit"
+                      className={`block rounded-md px-3 py-2 text-[13px] leading-snug transition-colors ${
+                        pathname === "/about/ibm-visit"
+                          ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                          : "text-[#4A4E54] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                      }`}
+                    >
+                      IEEE Foundation President and IBM Research Director Visit BRACU
+                    </Link>
+                  </div>
+                </div>
               )}
-            </Link>
+            </div>
 
             {/* 7. CARC SIGHT dropdown */}
             <div
@@ -757,18 +838,85 @@ export default function Navbar() {
                   )}
                 </div>
 
-                {/* 6. About */}
-                <Link
-                  href="/about"
-                  onClick={() => setMobileOpen(false)}
-                  className={`flex items-center rounded-lg px-3.5 py-2.5 text-[14.5px] transition-colors ${
-                    pathname.startsWith("/about")
-                      ? "bg-[#EAF1F6] text-[#00629B] font-semibold border-l-4 border-[#00629B]"
-                      : "font-medium text-[#191B1E] hover:bg-[#F5F3EE] hover:text-[#00629B]"
-                  }`}
-                >
-                  About
-                </Link>
+                {/* 6. About Accordion */}
+                <div className="rounded-lg">
+                  <button
+                    onClick={() => setMobileAboutOpen((v) => !v)}
+                    className={`flex w-full items-center justify-between rounded-lg px-3.5 py-2.5 text-[14.5px] transition-colors ${
+                      pathname.startsWith("/about")
+                        ? "bg-[#EAF1F6] text-[#00629B] font-semibold"
+                        : "font-medium text-[#191B1E] hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                    }`}
+                  >
+                    <span>About</span>
+                    <svg
+                      className={`h-4 w-4 text-[#9A9E9F] transition-transform duration-200 ${mobileAboutOpen ? "rotate-180 text-[#00629B]" : ""}`}
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                  {mobileAboutOpen && (
+                    <div className="my-1 space-y-1 rounded-xl bg-[#F5F3EE]/80 p-2 pl-3">
+                      <Link
+                        href="/about/ieee"
+                        onClick={() => setMobileOpen(false)}
+                        className={`block rounded-lg px-3 py-1.5 text-[13px] transition-colors ${
+                          pathname === "/about/ieee"
+                            ? "bg-[#E3DFD5]/70 text-[#00629B] font-semibold"
+                            : "text-[#4A4E54] hover:text-[#00629B]"
+                        }`}
+                      >
+                        About IEEE
+                      </Link>
+                      <Link
+                        href="/about/branch"
+                        onClick={() => setMobileOpen(false)}
+                        className={`block rounded-lg px-3 py-1.5 text-[13px] transition-colors ${
+                          pathname === "/about/branch"
+                            ? "bg-[#E3DFD5]/70 text-[#00629B] font-semibold"
+                            : "text-[#4A4E54] hover:text-[#00629B]"
+                        }`}
+                      >
+                        Student Branch
+                      </Link>
+                      <Link
+                        href="/about/organogram"
+                        onClick={() => setMobileOpen(false)}
+                        className={`block rounded-lg px-3 py-1.5 text-[13px] transition-colors ${
+                          pathname === "/about/organogram"
+                            ? "bg-[#E3DFD5]/70 text-[#00629B] font-semibold"
+                            : "text-[#4A4E54] hover:text-[#00629B]"
+                        }`}
+                      >
+                        Organogram
+                      </Link>
+                      <Link
+                        href="/about/resources"
+                        onClick={() => setMobileOpen(false)}
+                        className={`block rounded-lg px-3 py-1.5 text-[13px] transition-colors ${
+                          pathname === "/about/resources"
+                            ? "bg-[#E3DFD5]/70 text-[#00629B] font-semibold"
+                            : "text-[#4A4E54] hover:text-[#00629B]"
+                        }`}
+                      >
+                        Resources
+                      </Link>
+                      <Link
+                        href="/about/ibm-visit"
+                        onClick={() => setMobileOpen(false)}
+                        className={`block rounded-lg px-3 py-1.5 text-[12.5px] leading-snug transition-colors ${
+                          pathname === "/about/ibm-visit"
+                            ? "bg-[#E3DFD5]/70 text-[#00629B] font-semibold"
+                            : "text-[#4A4E54] hover:text-[#00629B]"
+                        }`}
+                      >
+                        IEEE Foundation President and IBM Research Director Visit BRACU
+                      </Link>
+                    </div>
+                  )}
+                </div>
 
                 {/* 7. CARC SIGHT Accordion */}
                 <div className="rounded-lg">

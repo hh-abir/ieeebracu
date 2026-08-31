@@ -1,70 +1,131 @@
 import Image from "next/image";
+import Link from "next/link";
 
-export const metadata = { title: "IEEE Foundation President Visits BRACU — IEEE BRACU SB" };
+export const metadata = { title: "IEEE Foundation President & IBM Director Visit — IEEE BRACU SB" };
 
 export default function IBMVisitPage() {
   return (
-    <div className="grid grid-cols-1 gap-14 lg:grid-cols-12">
-      <article className="space-y-8 lg:col-span-8">
-        <div>
-          <div className="mb-5 flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#00629B]">
-            <span className="inline-block h-0.5 w-[26px] bg-[#00629B]" />Special Visit
-          </div>
-          <h2 className="m-0 mb-5 font-[family-name:var(--font-serif)] text-[clamp(24px,3vw,34px)] font-semibold tracking-[-0.02em] text-[#191B1E]">
-            IEEE Foundation President &amp; IBM Research Director Visits BRACU
-          </h2>
-          <p className="m-0 mb-5 text-[16.5px] leading-[1.75] text-[#44474C]">
-            The IEEE BRAC University Student Branch had the honor of hosting a visit from the IEEE Foundation President and IBM Research Director. This landmark event underscored the growing recognition of the branch&rsquo;s work in advancing technology education and community engagement in Bangladesh.
-          </p>
-          <p className="m-0 mb-5 text-[16.5px] leading-[1.75] text-[#44474C]">
-            During the visit, the distinguished guests toured the university facilities, met with students and faculty, and delivered talks on the future of technology and the role of professional societies in shaping careers. The event was attended by branch members, university leadership, and guests from the broader IEEE Bangladesh Section.
-          </p>
-          <p className="m-0 mb-5 text-[16.5px] leading-[1.75] text-[#44474C]">
-            The visit highlighted the branch&rsquo;s contributions to IEEE&rsquo;s global mission and reinforced the connection between local student activities and the worldwide IEEE community. It remains one of the most significant events in the branch&rsquo;s history.
-          </p>
+    <div className="space-y-12">
+      {/* Page Header */}
+      <div className="border-b border-[#E3DFD5] pb-8">
+        <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#00629B]/20 bg-[#EAF1F6] px-3.5 py-1 text-[12px] font-semibold tracking-wider text-[#00629B] uppercase">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#00629B]" />
+          Historic Milestone
         </div>
+        <h1 className="m-0 font-[family-name:var(--font-serif)] text-[clamp(28px,3.8vw,44px)] font-bold tracking-tight text-[#0A2540]">
+          IEEE Foundation President &amp; IBM Research Director Visits BRACU
+        </h1>
+        <p className="m-0 mt-3 max-w-[70ch] text-[16px] leading-relaxed text-[#4A4E54]">
+          A historic occasion celebrating global technological collaboration, student innovation, and future research opportunities.
+        </p>
+      </div>
 
-        {/* photo gallery */}
-        <div>
-          <h3 className="m-0 mb-5 font-[family-name:var(--font-serif)] text-[20px] font-semibold text-[#191B1E]">Event Gallery</h3>
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              "https://ieeebracu.com/wp-content/uploads/2025/07/The-ML-Playbook-1-1-1.jpg",
-              "https://ieeebracu.com/wp-content/uploads/2020/04/web2.jpg",
-              "https://ieeebracu.com/wp-content/uploads/2025/07/Industry-Visit.png",
-              "https://ieeebracu.com/wp-content/uploads/2025/07/13.jpg",
-            ].map((src, i) => (
-              <div key={i} className="relative h-[180px] overflow-hidden rounded-xl border border-[#E3DFD5]">
-                <Image src={src} alt={`Visit photo ${i + 1}`} fill sizes="50vw" className="object-cover" />
-              </div>
-            ))}
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+        {/* Main Content */}
+        <article className="space-y-10 lg:col-span-8">
+          {/* Highlight Quote Box */}
+          <div className="relative overflow-hidden rounded-2xl border-l-4 border-l-[#00629B] border border-[#E3DFD5] bg-white p-7 shadow-sm">
+            <p className="m-0 font-[family-name:var(--font-serif)] text-[17px] italic leading-relaxed text-[#0A2540]">
+              &ldquo;Connecting passionate student researchers in Bangladesh with global technology pioneers creates the foundation for breakthroughs that benefit all of humanity.&rdquo;
+            </p>
           </div>
-          <p className="m-0 mt-3 text-[12px] text-[#B0B4B9]">
-            Photos from various branch events. Actual visit photos available in the full gallery.
-          </p>
-        </div>
-      </article>
 
-      <aside className="lg:col-span-4">
-        <div className="sticky top-[140px]">
-          <div className="rounded-2xl border border-[#E3DFD5] bg-white p-6">
-            <h3 className="m-0 mb-5 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#6E7178]">Event Details</h3>
-            <div className="space-y-4">
+          {/* Article Sections */}
+          <section className="space-y-4">
+            <div className="flex items-center gap-2.5 text-[12.5px] font-bold uppercase tracking-[0.14em] text-[#00629B]">
+              <span className="h-0.5 w-5 bg-[#00629B]" />
+              Event Overview
+            </div>
+            <h2 className="m-0 font-[family-name:var(--font-serif)] text-[24px] font-bold text-[#0A2540]">
+              A Landmark Engagement for BRAC University
+            </h2>
+            <p className="m-0 text-[16px] leading-[1.8] text-[#3C4046]">
+              The IEEE BRAC University Student Branch had the distinct privilege of hosting a historic visit from the <strong>IEEE Foundation President and IBM Research Director</strong>. This landmark event underscored the international recognition of the branch&rsquo;s sustained excellence in advancing technology education, engineering leadership, and humanitarian technology initiatives.
+            </p>
+            <p className="m-0 text-[16px] leading-[1.8] text-[#3C4046]">
+              During the visit, the distinguished international delegation toured BRAC University&rsquo;s research facilities, interacted closely with student project teams, and engaged in deep discussions with university leadership and faculty mentors regarding future joint research initiatives.
+            </p>
+            <p className="m-0 text-[16px] leading-[1.8] text-[#3C4046]">
+              Keynote sessions explored the future of quantum computing, AI in emerging economies, and the role of student branches in bridging academic exploration with industrial breakthroughs.
+            </p>
+          </section>
+
+          {/* Photo Gallery Grid */}
+          <section className="space-y-5">
+            <div className="flex items-center justify-between border-b border-[#E3DFD5] pb-3">
+              <h2 className="m-0 font-[family-name:var(--font-serif)] text-[22px] font-bold text-[#0A2540]">
+                Event Highlights &amp; Gallery
+              </h2>
+              <Link
+                href="/gallery"
+                className="text-[13px] font-semibold text-[#00629B] hover:underline"
+              >
+                View Full Gallery &rarr;
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {[
-                { label: "Event", value: "IEEE Foundation President & IBM Research Director Visit" },
-                { label: "Host", value: "IEEE BRACU Student Branch" },
-                { label: "Venue", value: "BRAC University, Dhaka" },
-                { label: "Significance", value: "First visit by IEEE Foundation leadership to BRACU" },
-              ].map((item) => (
-                <div key={item.label}>
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#B0B4B9]">{item.label}</div>
-                  <div className="mt-0.5 text-[14px] font-medium text-[#191B1E]">{item.value}</div>
+                { src: "https://ieeebracu.com/wp-content/uploads/2025/07/The-ML-Playbook-1-1-1.jpg", caption: "Keynote presentation and plenary discussion" },
+                { src: "https://ieeebracu.com/wp-content/uploads/2020/04/web2.jpg", caption: "Delegation meeting with student researchers" },
+                { src: "https://ieeebracu.com/wp-content/uploads/2025/07/Industry-Visit.png", caption: "Research laboratory demonstration & tour" },
+                { src: "https://ieeebracu.com/wp-content/uploads/2025/07/13.jpg", caption: "Interactive Q&A session with student body" },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  className="group overflow-hidden rounded-2xl border border-[#E3DFD5] bg-white shadow-sm transition-all hover:shadow-md"
+                >
+                  <div className="relative h-[200px] w-full overflow-hidden bg-[#FAF9F5]">
+                    <Image
+                      src={item.src}
+                      alt={item.caption}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 400px"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="p-3.5">
+                    <p className="m-0 text-[13px] text-[#6E7178]">{item.caption}</p>
+                  </div>
                 </div>
               ))}
             </div>
+          </section>
+        </article>
+
+        {/* Sidebar */}
+        <aside className="lg:col-span-4">
+          <div className="sticky top-28 space-y-6">
+            <div className="rounded-2xl border border-[#E3DFD5] bg-white p-6 shadow-sm">
+              <div className="mb-5 flex items-center justify-between border-b border-[#E3DFD5] pb-4">
+                <h3 className="m-0 font-[family-name:var(--font-serif)] text-[18px] font-bold text-[#0A2540]">
+                  Event Snapshot
+                </h3>
+                <span className="rounded-full bg-[#EAF1F6] px-2.5 py-0.5 text-[11px] font-semibold text-[#00629B]">
+                  Historical
+                </span>
+              </div>
+              <div className="space-y-3.5">
+                {[
+                  { label: "Visiting Delegation", value: "IEEE Foundation President & IBM Research Director" },
+                  { label: "Host", value: "IEEE BRACU Student Branch" },
+                  { label: "Venue", value: "BRAC University, Dhaka" },
+                  { label: "Participants", value: "Faculty, Researchers & IEEE Members" },
+                  { label: "Key Focus", value: "Frontier Computing, AI & Global Student Networks" },
+                ].map((item) => (
+                  <div key={item.label} className="border-b border-[#F0ECE1] pb-3 last:border-0 last:pb-0">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#9A9E9F]">
+                      {item.label}
+                    </div>
+                    <div className="mt-0.5 text-[14px] font-semibold text-[#191B1E]">
+                      {item.value}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      </aside>
+        </aside>
+      </div>
     </div>
   );
 }

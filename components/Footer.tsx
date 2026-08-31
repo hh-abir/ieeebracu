@@ -13,10 +13,10 @@ const quickLinks = [
   { label: "Home", href: "/" },
   { label: "News & Events", href: "/news" },
   { label: "Members", href: "/members" },
-  { label: "About IEEE", href: "/about" },
-  { label: "About the Branch", href: "/about#branch" },
+  { label: "About IEEE", href: "/about/ieee" },
+  { label: "Student Branch", href: "/about/branch" },
   { label: "Organogram", href: "/about/organogram" },
-  { label: "Logos & Resources", href: "/about/logos" },
+  { label: "Resources", href: "/about/resources" },
   { label: "Join IEEE", href: "/join" },
 ];
 
