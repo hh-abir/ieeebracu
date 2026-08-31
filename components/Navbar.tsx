@@ -27,14 +27,15 @@ export default function Navbar() {
   const [mobileMembershipOpen, setMobileMembershipOpen] = useState(false);
   const [mobileCarcOpen, setMobileCarcOpen] = useState(false);
 
-  // Close modal on Escape key press & lock scroll
+  // Close modal or mobile drawer on Escape key press & lock scroll
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setNewsletterModalOpen(false);
+        setMobileOpen(false);
       }
     };
-    if (newsletterModalOpen) {
+    if (newsletterModalOpen || mobileOpen) {
       window.addEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "hidden";
     }
@@ -42,7 +43,7 @@ export default function Navbar() {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "unset";
     };
-  }, [newsletterModalOpen]);
+  }, [newsletterModalOpen, mobileOpen]);
 
   return (
     <div className="font-[family-name:var(--font-sans)]">
@@ -381,134 +382,267 @@ export default function Navbar() {
             </button>
           </div>
         </div>
+      </header>
 
-        {/* mobile menu */}
-        {mobileOpen && (
-          <div className="border-t border-[#E3DFD5] bg-white md:hidden">
-            <nav className="mx-auto max-w-[1200px] px-8 py-3">
-              {/* 1. Home */}
-              <Link href="/" className="block rounded-md px-3 py-2 text-sm text-[#3C4046] hover:bg-[#F5F3EE]">
-                Home
-              </Link>
+      {/* ── Right-Side Slide-Over Mobile Menu Dialog ── */}
+      {mobileOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile Navigation Menu"
+          className="fixed inset-0 z-[100] md:hidden overflow-hidden"
+        >
+          {/* Backdrop overlay */}
+          <div
+            onClick={() => setMobileOpen(false)}
+            className="fixed inset-0 bg-[#0A2540]/60 backdrop-blur-sm transition-opacity animate-[drawerFadeIn_.25s_ease-out]"
+            aria-hidden="true"
+          />
 
-              {/* 2. News */}
-              <Link href="/news" className="block rounded-md px-3 py-2 text-sm text-[#3C4046] hover:bg-[#F5F3EE]">
-                News
-              </Link>
+          {/* Slide-over panel */}
+          <div className="fixed inset-y-0 right-0 flex max-w-full pl-8 pointer-events-none">
+            <div
+              className="relative pointer-events-auto flex h-full w-screen max-w-[320px] sm:max-w-[360px] flex-col bg-white shadow-2xl animate-[drawerSlideIn_.3s_cubic-bezier(0.16,1,0.3,1)]"
+            >
+              {/* Drawer Header */}
+              <div className="flex items-center justify-between border-b border-[#E3DFD5] bg-[#F5F3EE] px-5 py-4">
+                <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center">
+                  <Image
+                    src="https://ieeebracu.com/wp-content/uploads/2022/01/Artboard-1-1.png"
+                    alt="IEEE BRAC University Student Branch"
+                    width={150}
+                    height={34}
+                    className="h-7 w-auto object-contain"
+                  />
+                </Link>
+                <button
+                  onClick={() => setMobileOpen(false)}
+                  aria-label="Close menu"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[#E3DFD5] bg-white text-[#6E7178] transition-colors hover:bg-[#E3DFD5] hover:text-[#191B1E]"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
 
-              {/* 3. Members accordion */}
-              <button
-                onClick={() => setMobileMembersOpen((v) => !v)}
-                className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-[#3C4046] hover:bg-[#F5F3EE]"
-              >
-                Members <span>{mobileMembersOpen ? "\u2212" : "+"}</span>
-              </button>
-              {mobileMembersOpen && (
-                <div className="pl-4">
-                  {/* Membership sub-accordion */}
+              {/* Drawer Body — scrollable navigation items */}
+              <div className="flex-1 overflow-y-auto px-4 py-4 space-y-1.5 font-[family-name:var(--font-sans)]">
+                {/* 1. Home */}
+                <Link
+                  href="/"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                >
+                  Home
+                </Link>
+
+                {/* 2. News */}
+                <Link
+                  href="/news"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                >
+                  News
+                </Link>
+
+                {/* 3. Members Accordion */}
+                <div className="rounded-lg">
                   <button
-                    onClick={() => setMobileMembershipOpen((v) => !v)}
-                    className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-[#4A4E54] hover:bg-[#F5F3EE]"
+                    onClick={() => setMobileMembersOpen((v) => !v)}
+                    className="flex w-full items-center justify-between rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
                   >
-                    Membership <span>{mobileMembershipOpen ? "\u2212" : "+"}</span>
+                    <span>Members</span>
+                    <svg
+                      className={`h-4 w-4 text-[#9A9E9F] transition-transform duration-200 ${mobileMembersOpen ? "rotate-180 text-[#00629B]" : ""}`}
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                    </svg>
                   </button>
-                  {mobileMembershipOpen && (
-                    <div className="pl-4">
-                      <Link
-                        href="/members/why-how-do-you-join-ieee"
-                        className="block rounded-md px-3 py-1.5 text-xs text-[#6E7178] hover:bg-[#F5F3EE]"
+                  {mobileMembersOpen && (
+                    <div className="my-1 space-y-1 rounded-xl bg-[#F5F3EE]/80 p-2 pl-3">
+                      {/* Membership sub-accordion */}
+                      <button
+                        onClick={() => setMobileMembershipOpen((v) => !v)}
+                        className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-[13.5px] font-medium text-[#4A4E54] hover:bg-[#E3DFD5]/50 hover:text-[#00629B]"
                       >
-                        Why &amp; How Do You Join IEEE?
-                      </Link>
+                        <span>Membership</span>
+                        <svg
+                          className={`h-3.5 w-3.5 text-[#9A9E9F] transition-transform duration-200 ${mobileMembershipOpen ? "rotate-180 text-[#00629B]" : ""}`}
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 010 1.08l-4.25 4.5a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                      {mobileMembershipOpen && (
+                        <div className="space-y-1 pl-3">
+                          <Link
+                            href="/members/why-how-do-you-join-ieee"
+                            onClick={() => setMobileOpen(false)}
+                            className="block rounded-md px-3 py-1.5 text-[12.5px] text-[#6E7178] hover:text-[#00629B]"
+                          >
+                            Why &amp; How Do You Join IEEE?
+                          </Link>
+                          <Link
+                            href="/members/membership-benefits"
+                            onClick={() => setMobileOpen(false)}
+                            className="block rounded-md px-3 py-1.5 text-[12.5px] text-[#6E7178] hover:text-[#00629B]"
+                          >
+                            Membership Benefits
+                          </Link>
+                        </div>
+                      )}
                       <Link
-                        href="/members/membership-benefits"
-                        className="block rounded-md px-3 py-1.5 text-xs text-[#6E7178] hover:bg-[#F5F3EE]"
+                        href="/members"
+                        onClick={() => setMobileOpen(false)}
+                        className="block rounded-lg px-3 py-2 text-[13.5px] font-medium text-[#4A4E54] hover:bg-[#E3DFD5]/50 hover:text-[#00629B]"
                       >
-                        Membership Benefits
+                        Memberlist by Year
                       </Link>
                     </div>
                   )}
-
-                  <Link
-                    href="/members"
-                    className="block rounded-md px-3 py-2 text-sm text-[#4A4E54] hover:bg-[#F5F3EE]"
-                  >
-                    Memberlist by Year
-                  </Link>
                 </div>
-              )}
 
-              {/* 4. Mobile Newsletters button */}
-              <button
-                onClick={() => {
-                  setMobileOpen(false);
-                  setNewsletterModalOpen(true);
-                }}
-                className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-[#3C4046] hover:bg-[#F5F3EE]"
-              >
-                <span>Newsletters</span>
-                <span className="rounded bg-[#EAF1F6] px-2 py-0.5 text-[11px] font-semibold text-[#00629B]">
-                  By Year
-                </span>
-              </button>
+                {/* 4. Newsletters Button (Opens drawer) */}
+                <button
+                  onClick={() => {
+                    setMobileOpen(false);
+                    setNewsletterModalOpen(true);
+                  }}
+                  className="flex w-full items-center justify-between rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                >
+                  <span>Newsletters</span>
+                  <span className="rounded bg-[#EAF1F6] px-2 py-0.5 text-[11px] font-semibold text-[#00629B]">
+                    By Year
+                  </span>
+                </button>
 
-              {/* 5. Chapters accordion */}
-              <button
-                onClick={() => setChaptersOpen((v) => !v)}
-                className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-[#3C4046] hover:bg-[#F5F3EE]"
-              >
-                Chapters <span>{chaptersOpen ? "\u2212" : "+"}</span>
-              </button>
-              {chaptersOpen &&
-                chapters.map((c) => (
-                  <Link key={c.slug} href={`/chapters/${c.slug}`} className="block rounded-md px-6 py-2 text-sm text-[#6E7178] hover:bg-[#F5F3EE]">
-                    {c.name}
-                  </Link>
-                ))}
-
-              {/* 6. About */}
-              <Link href="/about" className="block rounded-md px-3 py-2 text-sm text-[#3C4046] hover:bg-[#F5F3EE]">
-                About
-              </Link>
-
-              {/* 7. CARC SIGHT accordion */}
-              <button
-                onClick={() => setMobileCarcOpen((v) => !v)}
-                className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm text-[#3C4046] hover:bg-[#F5F3EE]"
-              >
-                CARC SIGHT <span>{mobileCarcOpen ? "\u2212" : "+"}</span>
-              </button>
-              {mobileCarcOpen && (
-                <div className="pl-4">
-                  <a
-                    href="https://ieeebracu.com/carg-sight/carc/carc.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block rounded-md px-3 py-1.5 text-xs text-[#6E7178] hover:bg-[#F5F3EE]"
+                {/* 5. Chapters Accordion */}
+                <div className="rounded-lg">
+                  <button
+                    onClick={() => setChaptersOpen((v) => !v)}
+                    className="flex w-full items-center justify-between rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
                   >
-                    Control and Applications Research Center
+                    <span>Chapters</span>
+                    <svg
+                      className={`h-4 w-4 text-[#9A9E9F] transition-transform duration-200 ${chaptersOpen ? "rotate-180 text-[#00629B]" : ""}`}
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                  {chaptersOpen && (
+                    <div className="my-1 space-y-1 rounded-xl bg-[#F5F3EE]/80 p-2 pl-3">
+                      {chapters.map((c) => (
+                        <Link
+                          key={c.slug}
+                          href={`/chapters/${c.slug}`}
+                          onClick={() => setMobileOpen(false)}
+                          className="block rounded-lg px-3 py-1.5 text-[13px] text-[#4A4E54] hover:text-[#00629B]"
+                        >
+                          {c.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* 6. About */}
+                <Link
+                  href="/about"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                >
+                  About
+                </Link>
+
+                {/* 7. CARC SIGHT Accordion */}
+                <div className="rounded-lg">
+                  <button
+                    onClick={() => setMobileCarcOpen((v) => !v)}
+                    className="flex w-full items-center justify-between rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                  >
+                    <span>CARC SIGHT</span>
+                    <svg
+                      className={`h-4 w-4 text-[#9A9E9F] transition-transform duration-200 ${mobileCarcOpen ? "rotate-180 text-[#00629B]" : ""}`}
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                  {mobileCarcOpen && (
+                    <div className="my-1 space-y-1 rounded-xl bg-[#F5F3EE]/80 p-2 pl-3">
+                      <a
+                        href="https://ieeebracu.com/carg-sight/carc/carc.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block rounded-lg px-3 py-1.5 text-[12.5px] text-[#4A4E54] hover:text-[#00629B]"
+                      >
+                        Control and Applications Research Center
+                      </a>
+                      <a
+                        href="https://sight.ieee.org/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block rounded-lg px-3 py-1.5 text-[12.5px] text-[#4A4E54] hover:text-[#00629B]"
+                      >
+                        IEEE CARC SIGHT Bangladesh
+                      </a>
+                    </div>
+                  )}
+                </div>
+
+                {/* 8. Contact */}
+                <Link
+                  href="/contact"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center rounded-lg px-3.5 py-2.5 text-[14.5px] font-medium text-[#191B1E] transition-colors hover:bg-[#F5F3EE] hover:text-[#00629B]"
+                >
+                  Contact
+                </Link>
+              </div>
+
+              {/* Drawer Footer Actions */}
+              <div className="border-t border-[#E3DFD5] bg-[#F5F3EE] p-5 space-y-3">
+                <Link
+                  href="/join"
+                  onClick={() => setMobileOpen(false)}
+                  className="block w-full rounded-lg bg-[#00629B] py-2.5 text-center text-[14px] font-semibold text-white transition-colors hover:bg-[#004E7C]"
+                >
+                  Join IEEE
+                </Link>
+                <div className="flex items-center justify-center gap-4 pt-1 text-[#6E7178]">
+                  <a href="https://www.facebook.com/ieeebracusb" target="_blank" rel="noopener noreferrer" title="Facebook" className="hover:text-[#1877F2] transition-colors">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
                   </a>
-                  <a
-                    href="https://sight.ieee.org/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block rounded-md px-3 py-1.5 text-xs text-[#6E7178] hover:bg-[#F5F3EE]"
-                  >
-                    IEEE CARC SIGHT Bangladesh
+                  <a href="https://www.linkedin.com/company/ieee-bracu-sb/" target="_blank" rel="noopener noreferrer" title="LinkedIn" className="hover:text-[#0A66C2] transition-colors">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                  </a>
+                  <a href="https://www.instagram.com/ieeebracusb/" target="_blank" rel="noopener noreferrer" title="Instagram" className="hover:text-[#E4405F] transition-colors">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                  </a>
+                  <a href="https://www.youtube.com/@ieeebracustudentbranch" target="_blank" rel="noopener noreferrer" title="YouTube" className="hover:text-[#FF0000] transition-colors">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
                   </a>
                 </div>
-              )}
-
-              <Link href="/contact" className="block rounded-md px-3 py-2 text-sm text-[#3C4046] hover:bg-[#F5F3EE]">
-                Contact
-              </Link>
-              <Link href="/join" className="mt-2 block rounded-[7px] bg-[#00629B] px-3 py-2 text-center text-sm font-semibold text-white">
-                Join IEEE
-              </Link>
-            </nav>
+              </div>
+            </div>
           </div>
-        )}
-      </header>
+        </div>
+      )}
 
       {/* ── Right-Side Slide-Over Newsletter Modal (List of Years Only) ── */}
       {newsletterModalOpen && (
@@ -593,6 +727,25 @@ export default function Navbar() {
           </div>
         </div>
       )}
+
+      <style jsx>{`
+        @keyframes drawerSlideIn {
+          from {
+            transform: translateX(100%);
+          }
+          to {
+            transform: translateX(0);
+          }
+        }
+        @keyframes drawerFadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 }
