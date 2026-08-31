@@ -91,21 +91,21 @@ const chapters: Chapter[] = [
 function PersonCard({ member }: { member: Member }) {
   return (
     <div className="group flex flex-col items-center text-center">
-      <div className="relative mb-3.5 flex h-48 w-48 items-center justify-center rounded-full border-2 border-[#E3DFD5] bg-white p-1.5 shadow-[0_4px_18px_rgba(20,22,24,0.06)] transition-all duration-300 group-hover:border-[#00629B] group-hover:shadow-[0_12px_32px_rgba(0,98,155,0.18)] sm:h-56 sm:w-56 md:h-60 md:w-60">
+      <div className="relative mb-3.5 flex h-32 w-32 min-[400px]:h-36 min-[400px]:w-36 items-center justify-center rounded-full border-2 border-[#E3DFD5] bg-white p-1.5 shadow-[0_4px_18px_rgba(20,22,24,0.06)] transition-all duration-300 group-hover:border-[#00629B] group-hover:shadow-[0_12px_32px_rgba(0,98,155,0.18)] sm:h-44 sm:w-44 md:h-48 md:w-48 lg:h-56 lg:w-56">
         <div className="relative h-full w-full overflow-hidden rounded-full bg-[#F5F3EE]">
           <Image
             src={member.image}
             alt={member.name}
             fill
-            sizes="(max-width: 640px) 192px, (max-width: 768px) 224px, 240px"
+            sizes="(max-width: 400px) 128px, (max-width: 640px) 144px, (max-width: 768px) 176px, (max-width: 1024px) 192px, 224px"
             className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
           />
         </div>
       </div>
-      <h3 className="m-0 text-[16.5px] font-semibold tracking-[-0.01em] text-[#191B1E]">
+      <h3 className="m-0 text-[14.5px] font-semibold tracking-[-0.01em] text-[#191B1E] sm:text-[16.5px]">
         {member.name}
       </h3>
-      <span className="mt-1 text-[13px] font-medium uppercase tracking-[0.08em] text-[#00629B]">
+      <span className="mt-1 text-[11.5px] font-medium uppercase tracking-[0.08em] text-[#00629B] sm:text-[13px]">
         {member.role}
       </span>
     </div>
@@ -117,7 +117,7 @@ export default function ExecutiveBody() {
 
   return (
     <section className="bg-[#F5F3EE] py-24 font-[family-name:var(--font-sans)]">
-      <div className="mx-auto max-w-[1320px] px-8">
+      <div className="mx-auto max-w-[1320px] px-4 sm:px-8">
         {/* section head */}
         <div className="mb-14 text-center">
           <div className="mb-5 flex items-center justify-center gap-3 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#00629B]">
@@ -139,7 +139,7 @@ export default function ExecutiveBody() {
             Student Branch
           </span>
         </div>
-        <div className="mx-auto mb-20 max-w-[1100px] grid grid-cols-2 justify-items-center gap-x-4 gap-y-8 sm:grid-cols-4 sm:gap-x-6 sm:gap-y-10">
+        <div className="mx-auto mb-20 max-w-[1100px] grid grid-cols-2 justify-items-center gap-x-4 gap-y-8 md:grid-cols-4 md:gap-x-6 md:gap-y-10">
           {mainEB.map((m) => (
             <PersonCard key={m.name} member={m} />
           ))}
@@ -252,24 +252,24 @@ export default function ExecutiveBody() {
             </div>
 
             {/* modal body — member grid */}
-            <div className="grid grid-cols-2 justify-items-center gap-x-4 gap-y-8 px-6 py-8 sm:grid-cols-4 sm:gap-x-6 sm:px-10 sm:py-10">
+            <div className="grid grid-cols-2 justify-items-center gap-x-4 gap-y-8 px-4 py-6 sm:grid-cols-4 sm:gap-x-6 sm:px-10 sm:py-10">
               {activeChapter.members.map((m) => (
                 <div key={m.name} className="group flex flex-col items-center text-center">
-                  <div className="relative mb-3.5 flex h-40 w-40 items-center justify-center rounded-full border-2 border-[#E3DFD5] bg-white p-1.5 shadow-sm transition-all duration-300 group-hover:border-[#00629B] group-hover:shadow-[0_8px_24px_rgba(0,98,155,0.14)] sm:h-48 sm:w-48">
+                  <div className="relative mb-3.5 flex h-28 w-28 min-[400px]:h-32 min-[400px]:w-32 items-center justify-center rounded-full border-2 border-[#E3DFD5] bg-white p-1.5 shadow-sm transition-all duration-300 group-hover:border-[#00629B] group-hover:shadow-[0_8px_24px_rgba(0,98,155,0.14)] sm:h-40 sm:w-40 md:h-44 md:w-44">
                     <div className="relative h-full w-full overflow-hidden rounded-full bg-[#F5F3EE]">
                       <Image
                         src={m.image}
                         alt={m.name}
                         fill
-                        sizes="(max-width: 640px) 160px, 192px"
+                        sizes="(max-width: 400px) 112px, (max-width: 640px) 128px, (max-width: 768px) 160px, 176px"
                         className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
                   </div>
-                  <h4 className="m-0 text-[15.5px] font-semibold text-[#191B1E]">
+                  <h4 className="m-0 text-[13.5px] font-semibold text-[#191B1E] sm:text-[15.5px]">
                     {m.name}
                   </h4>
-                  <span className="mt-1 text-[12px] font-medium uppercase tracking-[0.08em] text-[#00629B]">
+                  <span className="mt-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[#00629B] sm:text-[12px]">
                     {m.role}
                   </span>
                 </div>
